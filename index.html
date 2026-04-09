@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;700&family=Pacifico&display=swap" rel="stylesheet">
+
+<title>Surabhi 💖</title>
+
+<style>
+body {
+    margin:0;
+    overflow:hidden;
+    font-family:'Poppins',sans-serif;
+    background:black;
+    color:white;
+}
+
+/* VIDEO */
+video {
+    position:fixed;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-1;
+}
+
+/* LOCK */
+#lock {
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+
+/* CHAT */
+#chat {display:none;padding:20px;}
+.msg {
+    background:#222;
+    margin:10px;
+    padding:10px;
+    border-radius:10px;
+}
+
+/* GAME */
+#game {
+    display:none;
+    position:absolute;
+    width:100%;
+    height:100%;
+}
+
+.heart {
+    position:absolute;
+    font-size:30px;
+    cursor:pointer;
+}
+
+/* STORY */
+#story {display:none;}
+
+.slide {
+    position:absolute;
+    width:100%;
+    height:100%;
+    background-size:cover;
+    background-position:center;
+    opacity:0;
+}
+.active {opacity:1;}
+
+.progress {
+    display:flex;
+    position:absolute;
+    top:0;
+    width:100%;
+}
+.progress span {
+    flex:1;
+    height:4px;
+    margin:2px;
+    background:rgba(255,255,255,0.3);
+}
+.progress span div {
+    height:100%;
+    width:0%;
+    background:white;
+}
+
+/* FINAL SCREEN */
+#final {
+    display:none;
+    text-align:center;
+    margin-top:40%;
+}
+
+/* EFFECT */
+.effect {
+    position:absolute;
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    animation:boom 1s forwards;
+}
+@keyframes boom {
+    to {transform:scale(20); opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<video autoplay muted loop>
+<source src="https://www.w3schools.com/howto/rain.mp4">
+</video>
+
+<!-- LOCK -->
+<div id="lock">
+    <h2>💖 Enter Secret 💖</h2>
+    <input id="pass" type="password">
+    <button onclick="unlock()">Unlock 🎁</button>
+</div>
+
+<!-- CHAT -->
+<div id="chat"></div>
+
+<!-- GAME -->
+<div id="game"></div>
+
+<!-- STORY -->
+<div id="story">
+
+<div class="progress">
+<span><div></div></span>
+<span><div></div></span>
+<span><div></div></span>
+</div>
+
+<div class="slide active" style="background-image:url('photo1.jpg')"></div>
+<div class="slide" style="background-image:url('photo2.jpg')"></div>
+<div class="slide" style="background-image:url('photo3.jpg')"></div>
+
+<div style="position:absolute;bottom:60px;width:100%;text-align:center;">
+<h1 style="font-family:Pacifico;">💖 Surabhi 💖</h1>
+<p>
+Advance Happy Birthday 🎉<br>
+This year will be unforgettable 💫<br>
+Always stay happy 😊<br>
+You are very special ❤️<br><br>
+Sorry for everything 🙏💖
+</p>
+<button onclick="party()">Celebrate 🎆</button>
+</div>
+
+</div>
+
+<!-- FINAL -->
+<div id="final">
+<h1>🎂 Happy Birthday in Advance 💖</h1>
+<p>Love you forever Surabhi ❤️</p>
+</div>
+
+<audio id="music" loop>
+<source src="https://www.bensound.com/bensound-music/bensound-love.mp3">
+</audio>
+
+<script>
+
+// PASSWORD
+function unlock(){
+    if(pass.value==="surabhi15"){
+        lock.style.display="none";
+        startChat();
+    }
+}
+
+// CHAT
+let msgs=["Hey Surabhi 💖","I made something for you...","Play this first 😌"];
+function startChat(){
+    chat.style.display="block";
+    let i=0;
+    let int=setInterval(()=>{
+        let d=document.createElement("div");
+        d.className="msg";
+        d.innerText=msgs[i];
+        chat.appendChild(d);
+        i++;
+        if(i===msgs.length){
+            clearInterval(int);
+            setTimeout(()=>{
+                chat.innerHTML+="<button onclick='startGame()'>Start 🎮</button>";
+            },1000);
+        }
+    },1000);
+}
+
+// GAME
+let count=0;
+function startGame(){
+    chat.style.display="none";
+    game.style.display="block";
+
+    let interval=setInterval(()=>{
+        let h=document.createElement("div");
+        h.className="heart";
+        h.innerHTML="💖";
+        h.style.left=Math.random()*90+"vw";
+        h.style.top=Math.random()*90+"vh";
+
+        h.onclick=()=>{
+            h.remove();
+            count++;
+            if(count>=5){
+                clearInterval(interval);
+                game.style.display="none";
+                startStory();
+            }
+        };
+
+        game.appendChild(h);
+        setTimeout(()=>h.remove(),2000);
+    },700);
+}
+
+// STORY
+function startStory(){
+    story.style.display="block";
+    music.play();
+}
+
+// PARTY
+function party(){
+    for(let i=0;i<200;i++){
+        let e=document.createElement("div");
+        e.className="effect";
+        e.style.left=Math.random()*100+"vw";
+        e.style.top=Math.random()*100+"vh";
+        e.style.background=`hsl(${Math.random()*360},100%,60%)`;
+        document.body.appendChild(e);
+        setTimeout(()=>e.remove(),1000);
+    }
+
+    setTimeout(()=>{
+        story.style.display="none";
+        final.style.display="block";
+    },2000);
+}
+</script>
+
+</body>
+</html>
